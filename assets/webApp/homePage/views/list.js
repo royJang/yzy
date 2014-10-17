@@ -1,0 +1,1 @@
+define(['libs',template('list')],function (libs,html){	var list = function (){};	list.prototype.onLoad = function (){		$("section").remove();		$("#main").html(html);	};	return list;});

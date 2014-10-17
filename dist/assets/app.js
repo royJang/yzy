@@ -1,0 +1,1 @@
+define(["libs"],function (libs){	var options = {};	var app = function (config){		options.baseUrl = config.baseUrl;		options.applications = config.applications;	};});

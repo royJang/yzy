@@ -1,0 +1,10 @@
+{
+  "name": "ios",
+  "private": true,
+  "dependencies": {
+    "jquery": "~1.11.1",
+    "zepto": "~1.1.4",
+    "underscore": "~1.7.0",
+    "director": "~1.2.2"
+  }
+}
