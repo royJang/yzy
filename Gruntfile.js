@@ -37,10 +37,17 @@ module.exports = function (grunt){
 			//当前处理的文件
 			var currentDir = dir[i];
 
-			//注册grunt任务
+			//注册grunt require任务
 			grunt.registerTask('puckForWeb_'+currentDir,'puckForWeb_Taks',function (){
+
 				puckForWeb(currentDir);
 				puckForApp(currentDir);
+			});
+
+			//注册grunt less 任务
+			grunt.registerTask('lessChannel_'+currentDir,'less All Channel',function (){
+
+				lessChannel(currentDir);
 			});
 
 			//注册watch任务
@@ -63,6 +70,11 @@ module.exports = function (grunt){
 				files : config.srcDir + "/" + currentDir + "/main.js",
 				tasks : ['puckForWeb_' + currentDir]
 			};
+
+			el[currentDir + "_3"] = {
+				files : config.srcDir + "/" + currentDir + "/res/channel.less" ,
+				tasks : ['lessChannel_' + currentDir]
+			}
 
 			//获取之前的watch配置
 			var beforeWatchConfig = grunt.config.get('watch');
@@ -102,29 +114,60 @@ module.exports = function (grunt){
 			}
 		},
 		copy : {
-			//将assets下所有静态资源移入dist下
-			//图片文件需要压缩
-			resource : {
-				flatten: true,
-				//只复制文件，不复制文件夹
-				//expand : true,
-				src : 'assets/{,*/}*.{js,css}',
-				dest : '<%= config.distDir %>'
-			},
 			html : {
 				flatten : true,
 				src : '<%= config.srcDir %>/**/index.html',
 				dest : '<%= config.distDir %>'
+			},
+			css : {
+				flatten : true,
+				src : '<%= config.srcDir %>/**/res/channel.css',
+				dest : '<%= config.distDir %>'
+			},
+			cssPublic : {
+				flatten : true,
+				src : "assets/css.css",
+				dest : "<%= config.distDir %>"
 			}
 		},
-		watch : {
+		uglify : {
+			//压缩静态Js资源
 			resource : {
-				files : "<%= copy.resource.src %>",
-				tasks : ['copy:resource']
+				files : [{
+					expand : true,
+					cwd : 'assets/',
+					src : '**.js',
+					dest : 'dist/assets/'
+				}]
+			}
+		},
+		less : {
+			css : {
+				files : [{
+					src : 'assets/css.less',
+					dest : 'assets/css.css'
+				}],
+				options : {
+					compress : true
+				}
+			}
+		},
+		//在开发目录保留编译后的css为调试使用
+		watch : {
+			//将开发目录中的静态js资源压缩
+			resource_uglify : {
+				files : "assets/**.js",
+				tasks : ['uglify:resource']
 			},
+			//copy 各子目录的index.html
 			html : {
 				files : "<%= copy.html.src %>",
 				tasks : ["copy:html"]
+			},
+			//编译公共样式，再copy进dist
+			less : {
+				files : "assets/css.less",
+				tasks : ["less:css","copy:cssPublic"]
 			}
 		}
 	});
@@ -176,5 +219,25 @@ module.exports = function (grunt){
 	function puckForApp (app){
 
 		//console.log('puckForApp');
+	}
+
+	//编译less
+	function lessChannel (app){
+
+		var path = config.srcDir + "/" + app + "/res/channel.less";
+		var destPath =  config.srcDir + "/" + app + "/res/channel.css";
+
+		var taskCfg = {
+			files : [{
+				src : path,
+				dest : destPath
+			}],
+			options : {
+				compress : true
+			}
+		};
+
+		grunt.config.set('less', { main: taskCfg });
+		grunt.task.run(['less','copy:css']);
 	}
 };

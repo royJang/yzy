@@ -1,5 +1,12 @@
+var devUrl = isDev() ? "webApp/homePage/" : "" ;
+
+function isDev(){
+
+	return location.pathname.indexOf("dist") == -1;
+};
+
 function template (path){
-	return "text!views/" + path + ".html";
+	return "text!" + (isDev() ? "webApp/homePage/" : "") + "views/" + path + ".html";
 }
 
 require.config({
@@ -13,25 +20,11 @@ require.config({
 
 require(['libs','app'],function (libs,app){
 
-	var fn_list = function (){
-		var List = new list();
-		List.onLoad();
-	};
-
-	function fn_pub (){
-		var Pub = new pub();
-		Pub.onLoad();
-	}
-
-	var r = new Router({
-		"/list" : fn_list,
-		"/pub" : fn_pub
-	})
-	.configure({
-		notfound : function (){
-			$("section").remove();
-			$("#main").html(notFound);
+	new app({
+		baseUrl : devUrl + "views/",
+		application : {
+			"/list" : "list",
+			"/pub" : "pub"
 		}
-	})
-	.init();
+	});
 });

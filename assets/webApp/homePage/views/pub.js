@@ -1,12 +1,12 @@
 define(['libs',template('pub')],function (libs,html){
 
-	var pub = function (){};
+	return {
 
-	pub.prototype.onLoad = function (){
+		onLoad : function (){
 
-		$("section").remove();
-		$("#main").html(html);
-	};
-
-	return pub;
+			$("section").remove();
+			$("#main").html(html);
+			console.log("pub");
+		}
+	}
 });
