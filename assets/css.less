@@ -5,27 +5,74 @@ body {
 	font:400 14px/1.5 Arial,"Lucida Grande",Verdana,"Microsoft YaHei";
 }
 
-.headView-home {
+header {
 
-	clear: both; background: @blue; .of; padding:10px 0;
+	.posf; width:100%; left:0; right:0; z-index:5000; top:0; background: @blue; .of;
 
-	li{
+	.headView-style-1 {
 
-		.fl; width:100%/3; .ta;
+		.of; line-height: 41px;
 
-		a {
+		li{
+			display:inline-block; .ta;
 
-			color:#fff; .tdn;
+			&.percent20 {
+				width:20%;
+			}
+			&.percent60 {
+				width:60%;
+			}
+
+			i {
+				color:#fff; font-size:20px; vertical-align: middle;
+			}
 		}
 	}
 }
 
 #main {
 
-	clear: both;
+	clear: both;margin-top:41px; box-sizing: border-box;
 }
 
 footer {
 
-	clear: both;
+	.posf; bottom:0; background: #fff; width:100%; left:0; right:0; z-index:5000;
+
+	@fontColor:#999;
+
+	ul {
+
+		border-top:1px solid #aaa;
+
+		li {
+
+			display: inline-block; width:100%/4; .ta; padding:5px 0;
+
+			a {
+
+				display: block; .tdn; color:@fontColor;
+
+				i {
+
+					display: block !important; color:@fontColor; padding:2px; font-size:20px !important;
+				}
+			}
+
+			@cc :@blue;
+
+			&:hover,&:active {
+
+				color:@cc;
+
+				a{
+					color:@cc;
+
+					i {
+						color:@cc;
+					}
+				}
+			}
+		}
+	}
 }

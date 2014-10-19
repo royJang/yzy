@@ -1,3 +1,48 @@
 <section>
-	<h1>list.html</h1>
+	<% if(data && data.length > 0){ %>
+		<div class="msgItem">
+			<div class="headerPic">
+				<img src="../../1.jpg" />
+			</div>
+			<div class="msgContent">
+				<div class="bcInfo">
+					<span class="nickName">iron iron iron man</span>
+					<span class="activityMsg">分享了一首歌</span>
+				</div>
+				<div class="bcContent">
+					<ul>
+						<li class="bcContent">
+							<!-- 文字内容 -->
+							这首歌很好听
+						</li>
+						<li class="bcMedia">
+							<!-- 多媒体文件 -->
+							爱着爱着就永远
+						</li>
+						<li class="bcPicture">
+							<!-- 图片文件 -->
+						</li>
+					</ul>
+				</div>
+				<div class="bcAbout">
+					<div class="fl">
+						<span class="bcDate">昨天</span>
+						<span class="bcAddress">上海</span>
+					</div>
+					<div class="fr">
+						<span class="bcFavorite"><i class="fa fa-heart-o"></i>赞</span>
+						<span class="bcChat"><i class="fa fa-comment-o"></i>评论</span>
+					</div>
+				</div>
+				<div class="favoriteAbout">
+					<i class="fa fa-heart-o"></i>
+					<span class="favoriteWith">电电</span>
+				</div>
+			</div>
+		</div>
+	<% } else { %>
+		<div>
+			帅到没朋友...
+		</div>
+	<% } %>
 </section>

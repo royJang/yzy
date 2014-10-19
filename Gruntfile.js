@@ -8,6 +8,10 @@ var _ = require("underscore");
 *   Gruntfile.js 2014-9-15
 */
 
+
+var distPath = "d:/wamp/www/";
+
+
 module.exports = function (grunt){
 
 	require('time-grunt');
@@ -17,7 +21,8 @@ module.exports = function (grunt){
 	var config = {};
 
 	config.srcDir = "assets/webApp";
-	config.distDir = "dist/";
+
+	config.distDir = distPath;
 
 	/*
 	*   根据webApp下的目录生成Grunt配置文件
@@ -137,7 +142,15 @@ module.exports = function (grunt){
 					expand : true,
 					cwd : 'assets/',
 					src : '**.js',
-					dest : 'dist/assets/'
+					dest : '<%= config.distDir %>assets/'
+				}]
+			},
+			plugin : {
+				files : [{
+					expand : true,
+					cwd : 'assets/plugin',
+					src : '**.js',
+					dest : '<%= config.distDir %>assets/plugin/'
 				}]
 			}
 		},
@@ -163,6 +176,10 @@ module.exports = function (grunt){
 			html : {
 				files : "<%= copy.html.src %>",
 				tasks : ["copy:html"]
+			},
+			plugin : {
+				files : "assets/plugin/**.js",
+				tasks : ['uglify:plugin']
 			},
 			//编译公共样式，再copy进dist
 			less : {
@@ -195,7 +212,7 @@ module.exports = function (grunt){
 
 		var src = config.srcDir + "/" + app + "/";
 		var out = config.distDir + "assets/webApp/" + app + "/main.js";
-		var exclude = ["libs","text","app"];
+		var exclude = ["libs","text","app","query"];
 
 		var taskCfg = {};
 		taskCfg.options = {
@@ -204,7 +221,8 @@ module.exports = function (grunt){
 			"paths" : {
 				"libs" : "../../lib.min",
 				"text" : "../../require.text",
-				"app" : "../../app"
+				"app" : "../../app",
+				"query" : "../../plugin/query"
 			},
 			"include" : include,
 			"out" : out,
