@@ -1,6 +1,7 @@
 {
 	"app" : "Hybrid",
 	"packPath" : {
-		"DST59567" : "E:/wamp/www/"
+		"DST59567" : "E:/wamp/www/",
+		"roy" : "D:/wamp/www/"
 	}
 }

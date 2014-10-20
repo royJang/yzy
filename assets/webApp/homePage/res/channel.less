@@ -1,6 +1,26 @@
 @import "../../../basic";
 @import "../../../resource";
 
+.navTitle {
+
+	width:100%; position: fixed; top:41px; left:0; background: #eee; height: 40px; line-height: 40px;
+
+	ul{
+
+		li{
+			.fl; width:100%/2; .ta;
+
+			&.active {
+				border-bottom: 2px solid #f90;
+			}
+		}
+	}
+}
+
+.broadcastContent {
+	margin-top:42px;
+}
+
 .msgItem {
 
 	padding:10px; .of; border-bottom:1px solid #ddd; clear:both;
@@ -76,7 +96,7 @@
 
 	.more-list {
 
-		margin:10px 0 20px 0; padding:5px 15px; background:#fff;
+		margin:10px 0 10px 0; padding:5px 15px; background:#fff;
 
 		font-size:14px;
 
@@ -87,7 +107,7 @@
 
 				a{
 
-					color:#000; .tdn;
+					color:#000; .tdn; display: block;
 					i {
 
 						width:50px; text-align: center; font-size:20px;
@@ -103,6 +123,9 @@
 	}
 
 	.more-list-1 {
+
+		margin-bottom:0;
+
 		li {
 			&:nth-child(1) {
 				i {
@@ -118,11 +141,14 @@
 
 			&:nth-child(3) {
 				i {
-					color:#f90;
+					color:@blue;
 				}
 			}
 
 			&:nth-child(4) {
+
+				border-bottom:1px solid #eee !important;
+
 				i {
 					color:@blue;
 				}
@@ -131,6 +157,7 @@
 	}
 
 	.more-list-2 {
+
 		li {
 			&:nth-child(1) {
 				i {
@@ -140,7 +167,7 @@
 
 			&:nth-child(2) {
 				i {
-					color:@red;
+					color:@blue;
 				}
 			}
 
@@ -179,7 +206,7 @@
 
 				a {
 
-					color: #000;
+					color: #000; display: block;
 					.tdn;
 					i {
 
@@ -194,6 +221,10 @@
 			li:last-child {
 
 				border-bottom: none;
+			}
+
+			li:nth-child(4) {
+				i {color:@red;}
 			}
 		}
 	}

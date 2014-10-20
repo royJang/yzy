@@ -1,4 +1,11 @@
 <section>
+	<div class="navTitle">
+		<ul>
+			<li class="nav-broadcast active">广播</li>
+			<li class="nav-group">组队</li>
+		</ul>
+	</div>
+	<div class="broadcastContent">
 	<% if(data && data.users.length > 0){ %>
 		<% for(var i=0,len=data.users.length;i<len;i++){ %>
 		<div class="msgItem">
@@ -47,4 +54,5 @@
 			帅到没朋友...
 		</div>
 	<% } %>
+	</div>
 </section>
