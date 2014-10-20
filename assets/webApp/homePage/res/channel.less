@@ -77,12 +77,118 @@
 	.more-list {
 
 		margin:10px 0 20px 0; padding:5px 15px; background:#fff;
-		font-size:16px;
+
+		font-size:14px;
 
 		ul {
 
 			li {
-				line-height: 22px; padding:7px 5px; border-bottom:1px solid #eee;
+				line-height: 40px; padding:7px 5px; border-bottom:1px solid #eee;
+
+				a{
+
+					color:#000; .tdn;
+					i {
+
+						width:50px; text-align: center; font-size:20px;
+					}
+				}
+			}
+
+			li:last-child {
+
+				border-bottom: none;
+			}
+		}
+	}
+
+	.more-list-1 {
+		li {
+			&:nth-child(1) {
+				i {
+					color:@green;
+				}
+			}
+
+			&:nth-child(2) {
+				i {
+					color:@blue;
+				}
+			}
+
+			&:nth-child(3) {
+				i {
+					color:#f90;
+				}
+			}
+
+			&:nth-child(4) {
+				i {
+					color:@blue;
+				}
+			}
+		}
+	}
+
+	.more-list-2 {
+		li {
+			&:nth-child(1) {
+				i {
+					color:@green;
+				}
+			}
+
+			&:nth-child(2) {
+				i {
+					color:@red;
+				}
+			}
+
+			&:nth-child(3) {
+				i {
+					color:@blue;
+				}
+			}
+		}
+	}
+}
+
+
+/*
+	@我的
+*/
+
+.mySection {
+
+	padding:10px 0;
+
+	.my-func-list {
+
+		margin: 10px 0 20px 0;
+		padding: 5px 15px;
+		background: #fff;
+
+		font-size: 14px;
+
+		ul.list-item {
+
+			li {
+				line-height: 40px;
+				padding: 7px 5px;
+				border-bottom: 1px solid #eee;
+
+				a {
+
+					color: #000;
+					.tdn;
+					i {
+
+						width: 50px;
+						text-align: center;
+						font-size: 20px;
+						color:@blue;
+					}
+				}
 			}
 
 			li:last-child {

@@ -1,6 +1,7 @@
 'use strict';
 
 var fs = require("fs");
+var os = require("os");
 var _ = require("underscore");
 
 /*
@@ -8,11 +9,25 @@ var _ = require("underscore");
 *   Gruntfile.js 2014-9-15
 */
 
-
-var distPath = "d:/wamp/www/";
-
-
 module.exports = function (grunt){
+
+	var distDir;
+
+	var appConfig = grunt.file.readJSON('appConfig.json');
+
+	var packPath = appConfig.packPath;
+
+	for(var p in packPath){
+
+		if(p.toLowerCase() == os.hostname().toLowerCase()){
+
+			distDir = packPath[p];
+		}
+	}
+
+	console.log("pack to ：" + distDir);
+
+	var packServer = [];
 
 	require('time-grunt');
 
@@ -22,7 +37,7 @@ module.exports = function (grunt){
 
 	config.srcDir = "assets/webApp";
 
-	config.distDir = distPath;
+	config.distDir = distDir;
 
 	/*
 	*   根据webApp下的目录生成Grunt配置文件
@@ -48,6 +63,9 @@ module.exports = function (grunt){
 				puckForWeb(currentDir);
 				puckForApp(currentDir);
 			});
+
+			//push 到 requirejs 任务目录
+			packServer.push('puckForWeb_'+currentDir);
 
 			//注册grunt less 任务
 			grunt.registerTask('lessChannel_'+currentDir,'less All Channel',function (){
@@ -131,7 +149,12 @@ module.exports = function (grunt){
 			},
 			cssPublic : {
 				flatten : true,
-				src : "assets/css.css",
+				src : ["assets/css.css","assets/font-awesome.min.css"],
+				dest : "<%= config.distDir %>"
+			},
+			fonts : {
+				flatten : true,
+				src : "assets/fonts/{,*/}*.{ttf,woff}",
 				dest : "<%= config.distDir %>"
 			}
 		},
@@ -165,6 +188,17 @@ module.exports = function (grunt){
 				}
 			}
 		},
+		//压缩图片
+		imagemin: {
+			publicImg: {
+				files : [{
+					expand: true,
+					cwd: 'assets/images',
+					src: '{,*/}*.{gif,jpeg,jpg,png}',
+					dest: '<%= config.distDir %>/assets/images'
+				}]
+			}
+		},
 		//在开发目录保留编译后的css为调试使用
 		watch : {
 			//将开发目录中的静态js资源压缩
@@ -185,6 +219,10 @@ module.exports = function (grunt){
 			less : {
 				files : "assets/css.less",
 				tasks : ["less:css","copy:cssPublic"]
+			},
+			imagemin : {
+				files : "assets/images/{,*/}*.{gif,jpeg,jpg,png}",
+				tasks : ["imagemin:publicImg"]
 			}
 		}
 	});
@@ -193,12 +231,16 @@ module.exports = function (grunt){
 	setGruntConfig();
 
 	//开发模式
-	grunt.registerTask('dev','development',function (){
-		grunt.tasks.run([
-			'connect:livereload',
-			'watch'
-		]);
-	});
+	grunt.registerTask('watches',[
+		'watch'
+	]);
+
+	//一键打包
+	grunt.registerTask('pro',[
+		'copy',
+		'uglify',
+		'imagemin'
+	].concat(packServer));
 
 	//h5 打包
 	function puckForWeb (app){

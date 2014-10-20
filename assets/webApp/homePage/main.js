@@ -4,7 +4,7 @@ var devUrl = isDev() ? "webApp/homePage/" : "" ;
 //false 为线上状态
 function isDev(){
 
-	if(location.hostname == "test.com" || location.hostname == "10.10.12.104"){
+	if(location.hostname == "test.com" || location.hostname == "10.10.12.104" || location.port == "3300"){
 		return false;
 	}
 	if(location.pathname.indexOf("dist") > 0){

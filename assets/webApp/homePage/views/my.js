@@ -12,6 +12,8 @@ define(['libs',template('my')],function (libs,html){
 		},
 		onLoad : function (){
 
+			$("footer ul li").removeClass("active").eq(3).addClass("active");
+
 			$("#main").html(html);
 		}
 	}

@@ -32,7 +32,8 @@ header {
 
 #main {
 
-	clear: both;margin-top:41px; box-sizing: border-box;
+	clear: both; box-sizing: border-box;
+	position: absolute; top:41px; bottom:56px; width:100%; overflow-y: auto;
 }
 
 footer {
@@ -61,7 +62,7 @@ footer {
 
 			@cc :@blue;
 
-			&:hover,&:active {
+			&:hover,&:active,&.active {
 
 				color:@cc;
 

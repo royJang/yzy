@@ -1,1 +1,0 @@
-define(["libs"],function(){var a={};return a.broadcast={},a.broadcast.get=function(){},a});
