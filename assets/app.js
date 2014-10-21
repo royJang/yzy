@@ -1,1 +1,338 @@
-define(function(){var a={},b={};a.home_template=function(){var a="";return a+='<ul class="headView-style-1">',a+='<li class="percent20"><i class="fa fa-list"></i></li>',a+='<li class="percent60">&nbsp;</li>',a+='<li class="percent20"><i class="fa fa-pencil-square-o"></i></li>',a+="</ul>"},a.home_func=function(){},a.home=function(){var b=a.home_template();$("header").html(b),a.home_func()},a.detail_template=function(a,b,c){var d="";return d+="<ul>",d+='<li class="headView-btn-left">'+b+"</li>",d+='<li class="headView-title">'+a+"</li>",d+='<li class="headView-btn-right">'+c+"</li>",d+="</ul>"},a.leftBtnFn=function(){history.back()},a.rightBtnFn=function(){},a.detail=function(b){var c=b.title||"",d=b.leftBtn,e=b.rightBtn,f="返回",g=a.leftBtnFn,h="",i=function(){};"object"==typeof d&&("string"==typeof d.text&&(f=d.text),d.fn&&"function"==typeof d.fn&&(g=d.fn)),"object"==typeof e&&("string"==typeof e.text&&(f=e.text),e.fn&&"function"==typeof e.fn&&(g=e.fn));var j=a.detail_template(c,f,h);$("header").html(j);var k=$(".headView-btn-left"),l=$(".headView-btn-right");k.on("tap",g),l.on("tap",i)},b.home_template=function(){var a="";return a+="<ul>",a+='<li><a href="#list"><i class="fa fa-comment"></i>消息</a></li>',a+='<li><a href="javascript:void(0);"><i class="fa fa-map-marker"></i>地图</a></li>',a+='<li><a href="#more"><i class="fa fa-bell"></i>发现</a></li>',a+='<li><a href="#my"><i class="fa fa-user"></i>我</a></li>',a+="</ul>"},b.home_func=function(){},b.home=function(){var a=b.home_template();$("footer").html(a),b.home_func()};var c=function(a){return a&&"object"==typeof a?a.baseUrl&&"string"==typeof a.baseUrl?a.application&&"object"==typeof a.application?(this.options={},this.options.baseUrl=a.baseUrl,this.options.application=a.application,void this.init()):void console.error("application must be a Object"):void console.error("baseUrl must be a String!"):void console.error("App router muest be requires  2 parameters!")};return c.prototype.init=function(){var a=[],b=[];for(var c in this.options.application)a.push(this.options.baseUrl+this.options.application[c]),b.push(c);this.setRouters(a,b)},c.prototype.setRouters=function(c,d){var e=function(){$("section").remove();var c,e=location.hash.slice(1);if(""==e)c=0;else a:for(var f=0,g=d.length;g>f;f++)if(e==d[f].slice(1)){c=f;break a}var h=arguments[0][c];if(h.onCreate&&"function"==typeof h.onCreate){var i=h.onCreate(),j=i.style,k=i.setHeader||{};1==j?(a.home(),b.home()):2==j&&(a.detail(k),b.home())}};require(c,function(){var a={};e(arguments),arguments[0].onLoad();for(var b=0,f=c.length;f>b;b++)a[d[b]]={on:arguments[b].onLoad,before:function(){},after:function(){}};new Router(a).configure({notfound:function(){$("section").remove(),$("#main").html("<h1>404 NOT FOUND</h1>")}}).init()})},c});
+define(function (){
+
+	var headerHTML = "";
+	var footerHTML = "";
+
+	/*
+	 *   header view / bottom view / channel view
+	 */
+	var headViewFoo = {};
+	var footerViewFoo = {};
+
+	/*
+	 *
+	 *   header
+	 *   style [1]
+	 *
+	 * */
+
+	headViewFoo.home_template = function (item){
+
+		if($.type(item) != "array") return;
+
+		var len = item.length;
+
+		var itemsWidth = "15%";
+		var titleWidth = (100 - (15 * len)) + "%";
+
+		var html = "";
+		var leftHtml = "";
+		var rightHtml = "";
+
+		var filterList = "";
+
+		//创建广播
+		var cBc = '<li style="width:'+ itemsWidth +';" class="nav-item-broadcast"><i class="fa fa-pencil-square-o"></i></li>';
+		//筛选列表
+		var filter = '<li style="width:'+ itemsWidth +';" class="nav-item-filter"><i class="fa fa-list"></i>全部</li>';
+		//查询
+		var search = '<li style="width:'+ itemsWidth +';" class="nav-item-search"><i class="fa fa-search"></i></li>';
+
+		for(var i= 0;i<len;i++){
+			if(item[i] == "search"){
+				rightHtml += search;
+			}else if(item[i] == "filter"){
+				leftHtml += filter
+				filterList += '<div class="filter-list">';
+				filterList += '<ul>';
+				filterList += '<li>全部</li>';
+				filterList += '</ul>';
+				filterList += '</div>';
+			}else if(item[i] == "broadcast"){
+				rightHtml += cBc;
+			}
+		}
+
+		html += '<ul class="headView-style-1">';
+		html += leftHtml;
+		html += '<li style="width:'+ titleWidth +';">&nbsp;</li>';
+		html += rightHtml;
+		html += '</ul>';
+		html += filterList;
+
+		return html;
+	};
+
+	headViewFoo.home_func = function (){
+
+		var cBroadcast = function (){
+			window.location.href = "/webApp/broadcast/index.html";
+		};
+
+		var search = function (){
+			console.log('search');
+		};
+
+		var filter = function (){
+			console.log('filter');
+		};
+
+		$(".nav-item-broadcast").on("tap",cBroadcast);
+		$(".nav-item-filter").on("tap",filter);
+		$(".nav-item-search").on("tap",search);
+	};
+
+	headViewFoo.home = function (item){
+
+		var html = headViewFoo.home_template(item);
+		$("header").html(html);
+
+		headViewFoo.home_func();
+	};
+
+	/*
+	 *   header [2]
+	 *
+	 *    //leftBtn 默认执行返回
+	 headView.setHeader = {
+	 title : '发现',
+	 leftBtn : {
+	 'text' : '返回',
+	 'fn' : back
+	 }
+	 };
+	 *
+	 * */
+
+	headViewFoo.detail_template = function (title,left,right){
+
+		var html = '';
+		html += '<ul class="headView-style-2">';
+		html += '<li class="headView-btn-left">'+ left +'</li>';
+		html += '<li class="headView-title">'+ title +'</li>';
+		html += '<li class="headView-btn-right">'+ right +'</li>';
+		html += '</ul>';
+
+		return html;
+	};
+
+	headViewFoo.leftBtnFn = function (){
+		history.back();
+	};
+
+	headViewFoo.rightBtnFn = function (){
+
+	};
+
+	headViewFoo.detail = function (options){
+
+		var title = options.title || "";
+		var leftBtn = options.leftBtn;
+		var rightBtn = options.rightBtn;
+
+		//左键 text , events
+		var headViewLeftBtnText = "返回",
+			headViewLeftBtnFn = headViewFoo.leftBtnFn;
+
+		var headViewRightBtnText = "",
+			headViewRightBtnFn = function (){};
+
+		if(typeof leftBtn == "object"){
+
+			if(typeof leftBtn.text == "string"){
+				headViewLeftBtnText = leftBtn.text;
+			}
+			if(leftBtn.fn && typeof leftBtn.fn == "function"){
+				headViewLeftBtnFn = leftBtn.fn;
+			}
+		}
+
+		if(typeof rightBtn == "object"){
+			if(typeof rightBtn.text == "string"){
+				headViewLeftBtnText = rightBtn.text;
+			}
+			if(rightBtn.fn && typeof rightBtn.fn == "function"){
+				headViewLeftBtnFn = rightBtn.fn;
+			}
+		}
+
+		var html = headViewFoo.detail_template(title,headViewLeftBtnText,headViewRightBtnText);
+
+		$("header").html(html);
+
+		var headViewLeftBtn = $(".headView-btn-left"),
+			headViewRightBtn = $(".headView-btn-right");
+
+		headViewLeftBtn.on('tap',headViewLeftBtnFn);
+		headViewRightBtn.on('tap',headViewRightBtnFn);
+	};
+
+
+	/*
+	 *
+	 *   footer [1]
+	 *
+	 * */
+
+	footerViewFoo.home_template = function (){
+
+		var html = "";
+
+		html += '<ul>';
+		html += '<li><a href="#list"><i class="fa fa-comment"></i>消息</a></li>';
+		html +=	'<li><a href="javascript:void(0);"><i class="fa fa-map-marker"></i>地图</a></li>';
+		html +=	'<li><a href="#more"><i class="fa fa-bell"></i>发现</a></li>';
+		html +=	'<li><a href="#my"><i class="fa fa-user"></i>我</a></li>';
+		html += '</ul>';
+
+		return html;
+	};
+
+	footerViewFoo.home_func = function (){
+
+
+	};
+
+	footerViewFoo.home = function (){
+
+		var html = footerViewFoo.home_template();
+		$("footer").html(html);
+
+		footerViewFoo.home_func();
+	};
+
+	/*
+	 *
+	 *   app init
+	 *
+	 * */
+
+	var app = function (config){
+
+		//参数判断
+		if(!config || typeof config != "object"){
+			console.error("App router muest be requires  2 parameters!");
+			return;
+		}
+
+		if(!config.baseUrl || typeof config.baseUrl != "string"){
+
+			console.error("baseUrl must be a String!");
+			return;
+		}
+
+		if(!config.application || typeof config.application != "object"){
+
+			console.error("application must be a Object");
+			return;
+		}
+
+		this.options = {};
+		this.options.baseUrl = config.baseUrl;
+		this.options.application = config.application;
+
+		this.init();
+	};
+
+	app.prototype.init = function (options){
+
+		var requireModule = [],
+			paths = [];
+
+		for(var i in this.options.application){
+
+			requireModule.push(this.options.baseUrl + this.options.application[i]);
+			paths.push(i);
+		}
+
+		this.setRouters(requireModule,paths);
+	};
+
+	app.prototype.setRouters = function (requireModule,paths){
+
+		var setViews = function (){
+
+			//先把之前的元素kill掉
+			$("section").remove();
+
+			var channel = location.hash.slice(1),
+				now;
+
+			//如果没有hash值,就走第一条路径
+			if(channel == ""){
+
+				now = 0;
+
+			}else{
+
+				label:for(var i= 0,len=paths.length;i<len;i++){
+
+					if(channel == paths[i].slice(1)){
+
+						now = i;
+						break label;
+					}
+				}
+			}
+
+			//view 初始化
+			var cViews = arguments[0][now];
+
+			//views onCreate
+			if(cViews.onCreate && typeof cViews.onCreate == "function"){
+
+				//创建头部和尾部
+				var headView = cViews.onCreate();
+				var style = headView.style;
+				var navItems = headView.navItem || ["filter","search","broadcast"];
+				var options = headView.setHeader || {};
+
+				//主页
+				if(style == 1){
+					headViewFoo.home(navItems);
+					footerViewFoo.home();
+					//底部的4个频道
+				}else if(style == 2){
+					headViewFoo.detail(options);
+					footerViewFoo.home();
+				}
+			}
+		};
+
+		require(requireModule,function mod(){
+
+			var router = {};
+			var now = 0;
+
+			var args = arguments;
+
+			setViews(arguments);
+
+			//第一个函数直接执行，不走hash
+			arguments[0].onLoad();
+
+			//将函数赋值给hash
+			for(var i= 0,len=requireModule.length;i<len;i++){
+				var arg = arguments[i];
+				router[paths[i]] = {
+					"on" : arg.onLoad,
+					"after" : arg.after || function (){},
+					//先执行每个channel自己的before,然后执行setViews
+					"before" : ((arg.before && arg.before()) ? 1 : 1) && function (){
+						setViews(args);
+					}
+				}
+			}
+
+			//创建路由
+			var r = new Router(router).configure({
+				notfound : function (){
+					$("section").remove();
+					$("#main").html("<h1>404 NOT FOUND</h1>");
+				}
+			}).init();
+		});
+	};
+
+	return app;
+});

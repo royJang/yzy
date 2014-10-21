@@ -7,14 +7,22 @@ body {
 
 header {
 
-	.posf; width:100%; left:0; right:0; z-index:5000; top:0; background: @blue; .of;
+	.posf; width:100%; left:0; right:0; z-index:5000; top:0; background: @blue;
 
-	.headView-style-1 {
+	.filter-list {
+		width:60px; height:100px; background: #000; position: fixed; top:20px; left:55px;
+	}
 
-		.of; line-height: 41px;
+	.headView-style-1,.headView-style-2 {
 
+		line-height: 41px;
+
+		li {
+			color:#fff; display:inline-block; .ta;
+		}
+
+		/* style 1 */
 		li{
-			display:inline-block; .ta;
 
 			&.percent20 {
 				width:20%;
@@ -22,9 +30,21 @@ header {
 			&.percent60 {
 				width:60%;
 			}
-
 			i {
 				color:#fff; font-size:20px; vertical-align: middle;
+			}
+		}
+		/*  style 2  */
+		li {
+
+			&.headView-btn-left{
+				width:20%; cursor: pointer;
+			}
+			&.headView-title {
+				width:60%;
+			}
+			&.headView-btn-right {
+				width:20%;
 			}
 		}
 	}

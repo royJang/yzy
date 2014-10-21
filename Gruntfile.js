@@ -22,9 +22,11 @@ module.exports = function (grunt){
 		if(p.toLowerCase() == os.hostname().toLowerCase()){
 
 			distDir = packPath[p];
-		}else{
-			distDir = "dist/"
 		}
+	}
+
+	if(!distDir){
+		distDir = "dist/";
 	}
 
 	console.log("pack to ：" + distDir);

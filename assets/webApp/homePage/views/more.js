@@ -6,6 +6,7 @@ define(['libs',template('more')],function (libs,html){
 			var headView = {};
 
 			headView.style = 1;
+			headView.navItem = ['broadcast'];
 
 			return headView;
 		},
