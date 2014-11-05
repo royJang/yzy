@@ -5,7 +5,6 @@ var os = require("os");
 var _ = require("underscore");
 
 /*
-*   yzy hybrid app && h5
 *   Gruntfile.js 2014-9-15
 */
 
@@ -239,7 +238,7 @@ module.exports = function (grunt){
 		'watch'
 	]);
 
-	//一键打包
+	//打包
 	grunt.registerTask('pro',[
 		'copy',
 		'uglify',
@@ -258,7 +257,7 @@ module.exports = function (grunt){
 
 		var src = config.srcDir + "/" + app + "/";
 		var out = config.distDir + "assets/webApp/" + app + "/main.js";
-		var exclude = ["libs","text","app","query"];
+		var exclude = ["libs","text","app","query","loading","collect"];
 
 		var taskCfg = {};
 		taskCfg.options = {
@@ -268,7 +267,9 @@ module.exports = function (grunt){
 				"libs" : "../../lib.min",
 				"text" : "../../require.text",
 				"app" : "../../app",
-				"query" : "../../plugin/query"
+				"query" : "../../plugin/query",
+				"loading" : "../../plugin/ui_loading",
+				"collect" : "../../plugin/ui_collect"
 			},
 			"include" : include,
 			"out" : out,

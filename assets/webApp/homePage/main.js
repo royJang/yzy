@@ -24,7 +24,9 @@ require.config({
 		"libs" : "lib.min",
 		"app" : "app",
 		"text" : "require.text",
-		"query" : "plugin/query"
+		"query" : "plugin/query",
+		"loading" : "plugin/ui_loading",
+		"collect" : "plugin/ui_collect"
 	}
 });
 

@@ -43,7 +43,7 @@ define(function (){
 				rightHtml += search;
 			}else if(item[i] == "filter"){
 				leftHtml += filter
-				filterList += '<div class="filter-list">';
+				filterList += '<div class="filter-list" style="display: none;">';
 				filterList += '<ul>';
 				filterList += '<li>全部</li>';
 				filterList += '</ul>';
