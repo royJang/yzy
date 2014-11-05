@@ -7,6 +7,7 @@ define(['libs',template('my')],function (libs,html){
 
 			//详细页为2
 			headView.style = 1;
+			headView.navItem = ['broadcast'];
 
 			return headView;
 		},

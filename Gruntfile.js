@@ -140,6 +140,11 @@ module.exports = function (grunt){
 			}
 		},
 		copy : {
+			firstHtml : {
+				flatten : true,
+				src : 'assets/index.html',
+				dest : '<%= config.distDir %>'
+			},
 			html : {
 				flatten : true,
 				src : '<%= config.srcDir %>/**/index.html',
@@ -208,6 +213,11 @@ module.exports = function (grunt){
 			resource_uglify : {
 				files : "assets/**.js",
 				tasks : ['uglify:resource']
+			},
+			//copy 首屏html
+			firstHtml : {
+				files : "<%= copy.firstHtml.src %>",
+				tasks : ['copy:firstHtml']
 			},
 			//copy 各子目录的index.html
 			html : {
