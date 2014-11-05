@@ -1,23 +1,3 @@
-var devUrl = isDev() ? "webApp/homePage/" : "" ;
-
-//isDev 为 true 是开发状态
-//false 为线上状态
-function isDev(){
-
-	if(location.hostname == "test.com" || location.hostname == "10.10.12.104" || location.port == "3300"){
-		return false;
-	}
-	if(location.pathname.indexOf("dist") > 0){
-		return false;
-	}
-
-	return true;
-};
-
-function template (path){
-	return "text!" + (isDev() ? "webApp/homePage/" : "") + "views/" + path + ".html";
-}
-
 require.config({
 	"baseUrl" : '../../',
 	"paths" : {
@@ -33,7 +13,7 @@ require.config({
 require(['libs','app'],function (libs,app){
 
 	new app({
-		baseUrl : devUrl + "views/",
+		baseUrl : y.devUrl + "views/",
 		application : {
 			"/list" : "list",
 			"/my" : "my",

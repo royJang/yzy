@@ -1,3 +1,32 @@
+if(!window.y) window.y = {};
+
+//isDev 为 true 是开发状态
+//false 为线上状态
+y.isDev = isDev();
+//开发路径(打包用)
+y.devUrl = isDev() ? "webApp/homePage/" : "" ;
+//获取html模板
+y.template = template();
+
+function template (path){
+	return "text!" + (isDev() ? "webApp/homePage/" : "") + "views/" + path + ".html";
+}
+
+function isDev(){
+
+	if(location.hostname == "test.com" || location.hostname == "10.10.12.104" || location.port == "3300"){
+		return false;
+	}
+	if(location.pathname.indexOf("dist") > 0){
+		return false;
+	}
+
+	return true;
+}
+
+
+
+
 define(function (){
 
 	var headerHTML = "";

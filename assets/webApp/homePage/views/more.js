@@ -1,4 +1,4 @@
-define(['libs',template('more')],function (libs,html){
+define(['libs', y.template('more')],function (libs,html){
 
 	return {
 
