@@ -22,8 +22,8 @@ define(function (){
 
 		var len = item.length;
 
-		var itemsWidth = "15%";
-		var titleWidth = (100 - (15 * len)) + "%";
+		var itemsWidth = "20%";
+		var titleWidth = (100 - (20 * len)) + "%";
 
 		var html = "";
 		var leftHtml = "";
@@ -34,7 +34,7 @@ define(function (){
 		//创建广播
 		var cBc = '<li style="width:'+ itemsWidth +';" class="nav-item-broadcast"><i class="fa fa-pencil-square-o"></i></li>';
 		//筛选列表
-		var filter = '<li style="width:'+ itemsWidth +';" class="nav-item-filter"><i class="fa fa-list"></i>全部</li>';
+		var filter = '<li style="width:'+ itemsWidth +'; font-size:14px;" class="nav-item-filter">广场<i class="fa fa-caret-down" style="font-size:12px;margin-left:5px;"></i></li>';
 		//查询
 		var search = '<li style="width:'+ itemsWidth +';" class="nav-item-search"><i class="fa fa-search"></i></li>';
 
@@ -45,7 +45,9 @@ define(function (){
 				leftHtml += filter
 				filterList += '<div class="filter-list" style="display: none;">';
 				filterList += '<ul>';
-				filterList += '<li>全部</li>';
+				filterList += '<li>广场</li>';
+				filterList += '<li>周边</li>';
+				filterList += '<li>朋友们</li>';
 				filterList += '</ul>';
 				filterList += '</div>';
 			}else if(item[i] == "broadcast"){
@@ -73,13 +75,19 @@ define(function (){
 			console.log('search');
 		};
 
-		var filter = function (){
-			console.log('filter');
+		var filter = function (e){
+			e.stopPropagation();
+			$(".filter-list").addClass("show");
 		};
 
 		$(".nav-item-broadcast").on("tap",cBroadcast);
 		$(".nav-item-filter").on("tap",filter);
 		$(".nav-item-search").on("tap",search);
+
+		$("body").on("tap",function (){
+
+			$(".filter-list").removeClass("show");
+		});
 	};
 
 	headViewFoo.home = function (item){
@@ -306,10 +314,11 @@ define(function (){
 
 			var args = arguments;
 
-			setViews(arguments);
-
-			//第一个函数直接执行，不走hash
-			arguments[0].onLoad();
+			//无hash执行执行第一个函数
+			if(!location.hash) {
+				setViews(arguments)
+				arguments[0].onLoad();
+			}
 
 			//将函数赋值给hash
 			for(var i= 0,len=requireModule.length;i<len;i++){

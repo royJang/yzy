@@ -10,7 +10,21 @@ header {
 	.posf; width:100%; left:0; right:0; z-index:5000; top:0; background: @blue;
 
 	.filter-list {
-		width:60px; height:100px; background: #000; position: fixed; top:20px; left:55px;
+		width:60px; height:100px; position: fixed; top:30px; left:44px;                                                                                                                                                                                                                        ;
+		.radius(2px); background: rgba(0,0,0,0.9); color:#fff; font-size:12px;
+		display: none;
+
+		&.show {
+			display: block;
+		}
+
+		ul{
+			padding:2px 5px; box-sizing: border-box;
+
+			li {
+				line-height: 33px; .ta; border-bottom: 1px solid #666;
+			}
+		}
 	}
 
 	.headView-style-1,.headView-style-2 {
