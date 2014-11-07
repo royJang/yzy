@@ -12,18 +12,14 @@ module.exports = function (grunt){
 
 	var distDir;
 
+	//根据主机名打包到不同路径
 	var appConfig = grunt.file.readJSON('appConfig.json');
-
 	var packPath = appConfig.packPath;
-
 	for(var p in packPath){
-
 		if(p.toLowerCase() == os.hostname().toLowerCase()){
-
 			distDir = packPath[p];
 		}
 	}
-
 	if(!distDir){
 		distDir = "dist/";
 	}
@@ -33,28 +29,21 @@ module.exports = function (grunt){
 	var packServer = [];
 
 	require('time-grunt');
-
 	require('load-grunt-tasks')(grunt);
 
 	var config = {};
-
 	config.srcDir = "assets/webApp";
-
 	config.distDir = distDir;
-
 	/*
 	*   根据webApp下的目录生成Grunt配置文件
 	*/
 	var getFolderDir = function (){
-
 		return fs.readdirSync(config.srcDir);
 	};
-
 	var setGruntConfig = function (){
 
 		//获取webApp下的所有文件夹名称
 		var dir = getFolderDir();
-
 		for(var i= 0,len=dir.length;i<len;i++){
 
 			//当前处理的文件
@@ -274,10 +263,10 @@ module.exports = function (grunt){
 			"baseUrl" : src,
 			"replace" : true,
 			"paths" : {
-				"libs" : "../../lib.min",
-				"text" : "../../require.text",
-				"app" : "../../app",
-				"query" : "../../plugin/query",
+				"libs"    : "../../lib.min",
+				"text"    : "../../require.text",
+				"app"     : "../../app",
+				"query"   : "../../plugin/query",
 				"loading" : "../../plugin/ui_loading",
 				"collect" : "../../plugin/ui_collect"
 			},
@@ -289,19 +278,14 @@ module.exports = function (grunt){
 		grunt.config.set('requirejs', { main: taskCfg });
 		grunt.task.run(['requirejs']);
 	}
-
 	//hybrid 打包
 	function puckForApp (app){
-
 		//console.log('puckForApp');
 	}
-
 	//编译less
 	function lessChannel (app){
-
 		var path = config.srcDir + "/" + app + "/res/channel.less";
 		var destPath =  config.srcDir + "/" + app + "/res/channel.css";
-
 		var taskCfg = {
 			files : [{
 				src : path,
@@ -311,7 +295,6 @@ module.exports = function (grunt){
 				compress : true
 			}
 		};
-
 		grunt.config.set('less', { main: taskCfg });
 		grunt.task.run(['less','copy:css']);
 	}

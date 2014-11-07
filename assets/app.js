@@ -1,32 +1,3 @@
-if(!window.y) window.y = {};
-
-//isDev 为 true 是开发状态
-//false 为线上状态
-y.isDev = isDev();
-//开发路径(打包用)
-y.devUrl = isDev() ? "webApp/homePage/" : "" ;
-//获取html模板
-y.template = template();
-
-function template (path){
-	return "text!" + (isDev() ? "webApp/homePage/" : "") + "views/" + path + ".html";
-}
-
-function isDev(){
-
-	if(location.hostname == "test.com" || location.hostname == "10.10.12.104" || location.port == "3300"){
-		return false;
-	}
-	if(location.pathname.indexOf("dist") > 0){
-		return false;
-	}
-
-	return true;
-}
-
-
-
-
 define(function (){
 
 	var headerHTML = "";
@@ -51,12 +22,12 @@ define(function (){
 
 		var len = item.length;
 
-		var itemsWidth = "20%";
-		var titleWidth = (100 - (20 * len)) + "%";
+		var itemsWidth = "20%",
+			titleWidth = (100 - (20 * len)) + "%";
 
-		var html = "";
-		var leftHtml = "";
-		var rightHtml = "";
+		var html = "",
+			leftHtml = "",
+			rightHtml = "";
 
 		var filterList = "";
 
@@ -103,11 +74,15 @@ define(function (){
 		var search = function (){
 			console.log('search');
 		};
-
+		var filterIndex = 0;
 		var filter = function (e){
 			e.stopPropagation();
-			$(".filter-list").addClass("show");
+			filterIndex++;
+			if(filterIndex % 2 == 0) return;
+			$(".filter-list").toggle();
 		};
+
+		$(document).on("tap",function(){ $(".filter-list").hide() })
 
 		$(".nav-item-broadcast").on("tap",cBroadcast);
 		$(".nav-item-filter").on("tap",filter);
@@ -131,13 +106,13 @@ define(function (){
 	 *   header [2]
 	 *
 	 *    //leftBtn 默认执行返回
-	 headView.setHeader = {
-	 title : '发现',
-	 leftBtn : {
-	 'text' : '返回',
-	 'fn' : back
-	 }
-	 };
+		 headView.setHeader = {
+			 title : '发现',
+			 leftBtn : {
+				 'text' : '返回',
+				 'fn' : back
+		    }
+	    };
 	 *
 	 * */
 
@@ -202,6 +177,15 @@ define(function (){
 
 		headViewLeftBtn.on('tap',headViewLeftBtnFn);
 		headViewRightBtn.on('tap',headViewRightBtnFn);
+	};
+
+	/*
+	*
+	*   header [3]
+	*
+	* */
+	headViewFoo.onlyHeaderWithTitle = function (){
+		$("header").html('<div class="headView-style-3"><h2>悦自游</h2></div>');
 	};
 
 
@@ -317,21 +301,24 @@ define(function (){
 
 			//views onCreate
 			if(cViews.onCreate && typeof cViews.onCreate == "function"){
-
 				//创建头部和尾部
 				var headView = cViews.onCreate();
-				var style = headView.style;
-				var navItems = headView.navItem || ["filter","search","broadcast"];
-				var options = headView.setHeader || {};
+				if(headView){
+					var style = headView.style;
+					var navItems = headView.navItem || ["filter","search","broadcast"];
+					var options = headView.setHeader || {};
 
-				//主页
-				if(style == 1){
-					headViewFoo.home(navItems);
-					footerViewFoo.home();
-					//底部的4个频道
-				}else if(style == 2){
-					headViewFoo.detail(options);
-					footerViewFoo.home();
+					//主页
+					if(style == 1){
+						headViewFoo.home(navItems);
+						footerViewFoo.home();
+						//底部的4个频道
+					}else if(style == 2){
+						headViewFoo.detail(options);
+						footerViewFoo.home();
+					}else if(style == 3){
+						headViewFoo.onlyHeaderWithTitle(options);
+					}
 				}
 			}
 		};

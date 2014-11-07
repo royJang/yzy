@@ -1,0 +1,41 @@
+@import "../../../basic";
+@import "../../../resource";
+
+#MAIN_LOGIN {
+
+	padding:15px;
+
+	.loginForm {
+		margin-top:20px;
+		li {
+			border:1px solid #ccc; margin-top:-1px;
+			&:last-child {
+				.box-sizing(border-box); padding:10px;
+			}
+			i {
+				.posa; top:12px; left:10px;
+			}
+			input,button {
+				padding: 12px; width:100%; border:none; outline: none; font-size:14px;
+			}
+			button {
+				 color:#fff; .radius(3px); text-shadow: 0 -1px rgba(0, 0, 0, .25); border-bottom: 1px solid rgba(0, 0, 0, .101);
+				background: @blue; padding:10px 0; .apple;
+			}
+		}
+	}
+	.otherForm {
+		margin-top:40px;
+		li {
+			.ta; .of; padding:10px 7px;
+			&:first-child {
+				a {
+					background: @green5; color:#fff;
+				}
+			}
+			a {
+				.tdn; .radius(3px); padding:10px 17px; color:@blue;
+			}
+		}
+	}
+}

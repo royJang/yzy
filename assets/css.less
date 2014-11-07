@@ -1,8 +1,22 @@
 @import "less";
 
 body {
+	color:#333; .yahei;
+}
 
-	font:400 14px/1.5 Arial,"Lucida Grande",Verdana,"Microsoft YaHei";
+@media (device-height:480px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone4/4s */
+	body {
+		.apple;
+	}
+}
+@media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone5 */
+	body{
+		.apple;
+	}
+}
+
+input,textarea {
+	outline:none; border-radius:1px; border-color:#aaa; border-style:solid; border-width:1px; color:#333; .f14;
 }
 
 header {
@@ -27,12 +41,16 @@ header {
 		}
 	}
 
-	.headView-style-1,.headView-style-2 {
+	.headView-style-1,.headView-style-2,.headView-style-3 {
 
 		line-height: 41px;
 
 		li {
 			color:#fff; display:inline-block; .ta;
+		}
+
+		h2 {
+			color:#fff; .ta; font-size:1.6em; .kaiti;
 		}
 
 		/* style 1 */
@@ -64,8 +82,7 @@ header {
 	}
 }
 
-#main {
-
+section {
 	clear: both; box-sizing: border-box;
 	position: absolute; top:41px; bottom:56px; width:100%; overflow-y: auto;
 }

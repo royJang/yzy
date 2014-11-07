@@ -1,0 +1,22 @@
+{
+  "requirejs" : {
+    "main" : {
+      "options" : {
+        "web" : {
+          "include" : [
+            "text",
+
+            "views/login",
+            "views/register",
+
+            "text!views/login.html",
+            "text!views/register.html",
+
+            "main.js"
+          ],
+          "out" : "<%= config.distDir %>/main.js"
+        }
+      }
+    }
+  }
+}
